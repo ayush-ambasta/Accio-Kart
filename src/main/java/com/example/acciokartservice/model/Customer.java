@@ -26,8 +26,8 @@ public class Customer {
     @Column(name="name")
     String name;
 
-    @Column(unique = false,nullable = false)
-    @Email
+    @Column(unique = true,nullable = false)
+    @Email(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}")
     String emailId;
 
     int age;
