@@ -8,7 +8,9 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -45,4 +47,8 @@ public class Customer {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="identity_id")
     Identity identity;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="customer_id")
+    List<OrderEntity> orders = new ArrayList<>();
 }
