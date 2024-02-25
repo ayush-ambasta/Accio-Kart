@@ -17,6 +17,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Table(name="customer")
+@Builder
 public class Customer {
 
     @Id

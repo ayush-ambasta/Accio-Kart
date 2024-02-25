@@ -1,9 +1,12 @@
 package com.example.acciokartservice.service;
 
 import com.example.acciokartservice.Enum.Gender;
+import com.example.acciokartservice.dto.request.CustomerRequest;
+import com.example.acciokartservice.dto.response.CustomerResponse;
 import com.example.acciokartservice.exception.CustomerNotFoundException;
 import com.example.acciokartservice.model.Customer;
 import com.example.acciokartservice.repository.CustomerRepository;
+import com.example.acciokartservice.service.transformer.CustomerTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,16 +18,20 @@ public class CustomerService {
 
     @Autowired
     CustomerRepository customerRepository;
-    public Customer addCustomer(Customer customer){
-        return customerRepository.save(customer);
+    public CustomerResponse addCustomer(CustomerRequest customerRequest){
+
+
+        Customer customer= CustomerTransformer.customerRequestToCustomer(customerRequest);
+        Customer savedCustomer=customerRepository.save(customer);
+        return CustomerTransformer.customerToCustomerResponse(savedCustomer);
     }
 
-    public Customer getCustomerID(int customerId) {
+    public CustomerResponse getCustomerID(int customerId) {
         Optional<Customer>optionalCustomer=customerRepository.findById(customerId);
         if(optionalCustomer.isEmpty()){
             throw new CustomerNotFoundException("Invalid CustomerId Not Found");
         }
-        return optionalCustomer.get();
+        return CustomerTransformer.customerToCustomerResponse(optionalCustomer.get());
     }
 
     public List<Customer> getAllCustomer() {
@@ -51,7 +58,7 @@ public class CustomerService {
         return customerRepository.getCustomerCountAgeGreater(age);
     }
 
-//    public List<Customer> getCustomerCountGender(Gender gender) {
-//        return customerRepository.getCustomerCountGender(gender);
-//    }
+    public List<Customer> getCustomerCountGender(Gender gender) {
+        return customerRepository.getCustomerCountGender(gender);
+    }
 }

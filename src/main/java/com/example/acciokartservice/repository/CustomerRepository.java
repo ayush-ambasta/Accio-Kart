@@ -20,9 +20,8 @@ public interface CustomerRepository extends JpaRepository<Customer,Integer> {
 
     @Query("select count(c) from Customer c where c.age > :a")
     List<Customer> getCustomerCountAgeGreater(@Param("a") int age);
-//
-//
-////    @Query(value = "select count(*) from customer  where gender = :a",nativeQuery = true) //plain sql
+
+//   @Query(value = "select count(*) from customer  where gender = :a",nativeQuery = true) //plain sql
     @Query("select count(c) from Customer c where c.gender = :a")
     List<Customer> getCustomerCountGender(@Param("a") Gender gender);
 

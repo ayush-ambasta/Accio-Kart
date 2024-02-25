@@ -1,6 +1,8 @@
 package com.example.acciokartservice.controller;
 
 import com.example.acciokartservice.Enum.Gender;
+import com.example.acciokartservice.dto.request.CustomerRequest;
+import com.example.acciokartservice.dto.response.CustomerResponse;
 import com.example.acciokartservice.model.Customer;
 import com.example.acciokartservice.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +21,12 @@ public class CustomerController {
         this.customerService = customerService;
     }
     @PostMapping("/add")
-    public Customer addCustomer(@RequestBody Customer customer){
-        return customerService.addCustomer(customer);
+    public CustomerResponse addCustomer(@RequestBody CustomerRequest customerRequest){
+        return customerService.addCustomer(customerRequest);
     }
 
     @GetMapping("/get/id/{id}")
-    public Customer getCustomerID(@PathVariable("id") int customerId) {
+    public CustomerResponse getCustomerID(@PathVariable("id") int customerId) {
         return customerService.getCustomerID(customerId);
     }
 
