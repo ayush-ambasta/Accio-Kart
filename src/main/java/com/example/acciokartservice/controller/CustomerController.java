@@ -6,6 +6,8 @@ import com.example.acciokartservice.dto.response.CustomerResponse;
 import com.example.acciokartservice.model.Customer;
 import com.example.acciokartservice.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -54,9 +56,15 @@ public class CustomerController {
     public List<Customer> getCustomerCountAgeGreater(@RequestParam("age") int age){
         return customerService.getCustomerCountAgeGreater(age);
     }
-//
-//    @GetMapping("/get/count-gender")
-//    public List<Customer> getCustomerCountGender(@RequestParam("gender") Gender gender){
-//        return customerService.getCustomerCountGender(gender);
-//    }
+
+    @GetMapping("/get/count-gender")
+    public List<Customer> getCustomerCountGender(@RequestParam("gender") Gender gender){
+        return customerService.getCustomerCountGender(gender);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<String> deleteCustomer(@RequestParam("email") String email){
+        customerService.deleteCustomer(email);
+        return new ResponseEntity<>("Customer deleted", HttpStatus.ACCEPTED);
+    }
 }
